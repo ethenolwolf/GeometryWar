@@ -12,11 +12,11 @@ public class LegionControl : MonoBehaviour {
 
 	public event System.Action OnDefeated;
 
-	public void InitializeSoldiers(string side) {
+	public void InitializeSoldiers(string side, Vector3 pos) {
 		string rivalSide = side.StartsWith("Player") ? "Enemy" : "Player";
 
 		for (int i = 0; i < soldierCount; i++) {
-			Transform soldierTransform = Instantiate(soldierPrefab, transform.position, Quaternion.identity) as Transform;
+			Transform soldierTransform = Instantiate(soldierPrefab, pos, Quaternion.identity) as Transform;
 			soldierTransform.parent = legion;
 
 			SoldierEntity soldierEntity = soldierTransform.GetComponent<SoldierEntity>();

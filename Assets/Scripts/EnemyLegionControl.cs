@@ -5,12 +5,15 @@ public class EnemyLegionControl : LegionControl {
 
 	public float destRadius = 20;
 	public float newDestTime = 10f;
-
 	public Color legionColorVariance;
+
+	MapGenerator mapGenerator;
 
 	void Start () {
 		legionColor = Color.Lerp(legionColor, legionColorVariance, Random.Range(0f, 1f));
-		InitializeSoldiers("Enemy");
+		mapGenerator = FindObjectOfType<MapGenerator>();
+
+		InitializeSoldiers("Enemy", transform.position);
 		InvokeRepeating("SetRandomDestination", 1f, newDestTime);
 
 		GameObject playerLegionControlObj = GameObject.FindGameObjectWithTag("Player");
@@ -28,8 +31,7 @@ public class EnemyLegionControl : LegionControl {
 	}
 
 	void SetRandomDestination() {
-		Vector2 randomVec2 = Random.insideUnitCircle * destRadius;
-		SetDestination(new Vector3(randomVec2.x, 0f, randomVec2.y));
+		SetDestination(mapGenerator.GetRandomWalkablePos());
 	}
 
 }

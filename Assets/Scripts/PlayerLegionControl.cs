@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerLegionControl : LegionControl {
 
 	public float cameraSpeed = 1f;
+	public float cameraRigBoundary = 10f;
 	public Transform cameraRig;
     public Transform destMarker;
 
@@ -20,7 +21,7 @@ public class PlayerLegionControl : LegionControl {
 	bool legionDefeated = false;
 
     void Start() {
-		InitializeSoldiers("Player");
+		InitializeSoldiers("Player", new Vector3(0.5f, 0f, 0.5f));
         plane = new Plane(Vector3.up, Vector3.zero);
 
 		destMarkerMaterial = destMarker.GetComponent<Renderer>().material;
@@ -55,7 +56,7 @@ public class PlayerLegionControl : LegionControl {
 			Vector3 centerPos = GetCenterPos();
 			Vector2 cameraDir = new Vector2(centerPos.x - cameraRig.position.x, centerPos.z - cameraRig.position.z).normalized;
 			Vector3 cameraRigPos = cameraRig.position + new Vector3(cameraDir.x, 0f, cameraDir.y) * cameraSpeed * Time.deltaTime;
-			cameraRig.position = new Vector3(Mathf.Clamp(cameraRigPos.x, -10f, 10f), 0f, Mathf.Clamp(cameraRigPos.z, -10f, 10f));
+			cameraRig.position = new Vector3(Mathf.Clamp(cameraRigPos.x, -cameraRigBoundary, cameraRigBoundary), 0f, Mathf.Clamp(cameraRigPos.z, -cameraRigBoundary, cameraRigBoundary));
 		}
 
     }
